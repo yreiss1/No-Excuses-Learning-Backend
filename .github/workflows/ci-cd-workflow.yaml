@@ -15,12 +15,14 @@ jobs:
           node-version: '18.x'
       - run: npm ci
       - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1.3
+        uses: SpicyPizza/create-envfile@v2.0
         with:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
           FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          file_name: .env
+          directory: './'
       - name: Build NextJS app
         run: npm run build --if-present
       - name: Run tests
