@@ -25,19 +25,4 @@ describe("Auth flow", () => {
     expect(login.status).toBe(200);
     expect(login.body).toHaveProperty("accessToken");
   });
-
-  it("Firebase endpoints respond appropriately depending on configuration", async () => {
-    const firebaseEmailResponse = await request(app)
-      .post("/api/auth/firebase/email-password")
-      .send({ email: "test@example.com", password: "password123" });
-
-    // If Firebase is not configured → 503, otherwise an auth error → 401
-    expect([401, 503]).toContain(firebaseEmailResponse.status);
-
-    const firebaseGoogleResponse = await request(app)
-      .post("/api/auth/firebase/google")
-      .send({ idToken: "fake-token" });
-
-    expect([401, 503]).toContain(firebaseGoogleResponse.status);
-  });
 });

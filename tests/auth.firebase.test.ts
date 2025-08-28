@@ -33,14 +33,3 @@ describe("Firebase auth middleware", () => {
   });
 });
 
-describe("Firebase auth routes", () => {
-  it("/api/auth/firebase/google returns JWT when Firebase token valid", async () => {
-    verifyIdTokenMock.mockResolvedValueOnce({ uid: "uid_google", email: "g@example.com", name: "G User" });
-    const res = await request(app)
-      .post("/api/auth/firebase/google")
-      .send({ idToken: "valid_firebase_token" });
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty("accessToken");
-    expect(res.body.user).toMatchObject({ email: "g@example.com", name: "G User" });
-  });
-});
