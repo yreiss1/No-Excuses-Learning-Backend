@@ -6,17 +6,18 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
+      - run: npm ci
+      - name: Build NextJS app
+        run: npm run build --if-present
         env:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
           FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - name: Run tests
+        run: npm test
