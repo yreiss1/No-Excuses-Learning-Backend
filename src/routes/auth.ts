@@ -4,8 +4,9 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import { z } from "zod";
 import { validate } from "../middleware/validate";
 import { env } from "../modules/env";
-import { firebaseAuth } from "../modules/firebase";
 import { UserStore } from "../store/users";
+import * as crypto from 'crypto'; 
+
 
 const router = Router();
 
