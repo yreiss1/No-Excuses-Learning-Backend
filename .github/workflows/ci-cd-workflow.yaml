@@ -6,6 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -13,11 +14,12 @@ jobs:
         with:
           node-version: '18.x'
       - run: npm ci
+      - name: Create .env file
+        run: |
+          echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> .env
+          echo "FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}" >> .env
+          echo "FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }}" >> .env
       - name: Build NextJS app
         run: npm run build --if-present
-        env:
-          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
-          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
       - name: Run tests
         run: npm test
